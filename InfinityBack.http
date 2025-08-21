@@ -1,0 +1,6 @@
+@InfinityBack_HostAddress = http://localhost:5075
+
+GET {{InfinityBack_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

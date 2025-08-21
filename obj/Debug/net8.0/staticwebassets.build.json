@@ -1,0 +1,20 @@
+{
+  "Version": 1,
+  "Hash": "luOp7ppZn8zMsDJDWCseDmCJxZRb9OlqXNUgaallb1g=",
+  "Source": "InfinityBack",
+  "BasePath": "_content/InfinityBack",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "InfinityBack\\wwwroot",
+      "Source": "InfinityBack",
+      "ContentRoot": "C:\\Users\\User\\Desktop\\ItsInfinity\\InfinityBack\\wwwroot\\",
+      "BasePath": "_content/InfinityBack",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [],
+  "Endpoints": []
+}
