@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InfinityBack.dataBase
 {
@@ -26,6 +27,11 @@ namespace InfinityBack.dataBase
         public Cart? Cart { get; set; } 
         public ICollection<Wishlist> Wishlists { get; set; } = new List<Wishlist>();
         public ICollection<ProductReview> ProductReviews { get; set; } = new List<ProductReview>();
+        [InverseProperty("CreatedByUser")]
+        public ICollection<Product> CreatedProducts { get; set; } = new List<Product>();
+
+        [InverseProperty("UpdatedByUser")]
+        public ICollection<Product> UpdatedProducts { get; set; } = new List<Product>();
         public bool IsActive { get; set; } = true;
     }
 }

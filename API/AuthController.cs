@@ -32,7 +32,6 @@ namespace InfinityBack.API
                 PhoneNumber = registerDto.PhoneNumber,
                 Gender = registerDto.Gender,
                 BirthDate = registerDto.BirthDate,
-                Address = registerDto.Address
             };
 
             if (user == null)
@@ -70,3 +69,4 @@ namespace InfinityBack.API
 
     }
 }
+ 

@@ -33,7 +33,7 @@ namespace InfinityBack.Application.Services
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
             var users = await _dbContext.Users
-             .Where(u => u.IsActive) // <--  أهم إضافة
+             .Where(u => u.IsActive)
              .ToListAsync();
 
             return users.Select(user => new UserDto

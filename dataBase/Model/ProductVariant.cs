@@ -17,9 +17,10 @@ namespace InfinityBack.dataBase
         public Size Size { get; set; } = null!;
 
         public decimal Price { get; set; }
-        public int Quantity { get; set; }
+        public int TotalQuantity { get; set; }
         public string? Sku { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public ICollection<CartItem> CartItems { get; set; } = new List<CartItem>();
+        public ICollection<ProductVariantImage> Images { get; set; } = new List<ProductVariantImage>();
     }
 }

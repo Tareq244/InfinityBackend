@@ -140,3 +140,5 @@ C:\Users\User\Desktop\ItsInfinity\InfinityBack\obj\Debug\net8.0\ref\InfinityBack
 C:\Users\User\Desktop\ItsInfinity\InfinityBack\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\User\Desktop\ItsInfinity\InfinityBack\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\User\Desktop\ItsInfinity\InfinityBack\bin\Debug\net8.0\InfinityBack.staticwebassets.runtime.json
+C:\Users\User\Desktop\ItsInfinity\InfinityBack\obj\Debug\net8.0\InfinityBack.sourcelink.json
+C:\Users\User\Desktop\ItsInfinity\InfinityBack\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -59,27 +59,31 @@ namespace InfinityBack.Migrations
 
             modelBuilder.Entity("InfinityBack.dataBase.Attachment", b =>
                 {
-                    b.Property<int>("AttachmentID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AttachmentID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ReferenceID")
+                    b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
 
-                    b.Property<string>("TableName")
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AttachmentID");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Attachments");
                 });
@@ -222,6 +226,28 @@ namespace InfinityBack.Migrations
                     b.ToTable("Colors");
                 });
 
+            modelBuilder.Entity("InfinityBack.dataBase.Model.ProductVariantImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductVariantId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.ToTable("ProductVariantImages");
+                });
+
             modelBuilder.Entity("InfinityBack.dataBase.Model.Size", b =>
                 {
                     b.Property<int>("Id")
@@ -276,7 +302,7 @@ namespace InfinityBack.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -304,7 +330,7 @@ namespace InfinityBack.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("PriceAtPurchase")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("ProductVariantId")
                         .HasColumnType("int");
@@ -348,7 +374,7 @@ namespace InfinityBack.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -386,6 +412,9 @@ namespace InfinityBack.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("CreatedByUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ProductDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -398,11 +427,21 @@ namespace InfinityBack.Migrations
                     b.Property<int>("TargetAudienceId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedByUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("CreatedByUserId");
+
                     b.HasIndex("TargetAudienceId");
+
+                    b.HasIndex("UpdatedByUserId");
 
                     b.ToTable("Products");
                 });
@@ -451,12 +490,9 @@ namespace InfinityBack.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<int>("SizeId")
@@ -464,6 +500,9 @@ namespace InfinityBack.Migrations
 
                     b.Property<string>("Sku")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalQuantity")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -588,6 +627,17 @@ namespace InfinityBack.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("InfinityBack.dataBase.Attachment", b =>
+                {
+                    b.HasOne("InfinityBack.dataBase.Product", "Product")
+                        .WithMany("Attachments")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("InfinityBack.dataBase.Cart", b =>
                 {
                     b.HasOne("InfinityBack.dataBase.User", "User")
@@ -635,6 +685,17 @@ namespace InfinityBack.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("InfinityBack.dataBase.Model.ProductVariantImage", b =>
+                {
+                    b.HasOne("InfinityBack.dataBase.ProductVariant", "ProductVariant")
+                        .WithMany("Images")
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductVariant");
                 });
 
             modelBuilder.Entity("InfinityBack.dataBase.Order", b =>
@@ -700,15 +761,30 @@ namespace InfinityBack.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("InfinityBack.dataBase.User", "CreatedByUser")
+                        .WithMany("CreatedProducts")
+                        .HasForeignKey("CreatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("InfinityBack.dataBase.Model.TargetAudience", "TargetAudience")
                         .WithMany("Products")
                         .HasForeignKey("TargetAudienceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("InfinityBack.dataBase.User", "UpdatedByUser")
+                        .WithMany("UpdatedProducts")
+                        .HasForeignKey("UpdatedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Category");
 
+                    b.Navigation("CreatedByUser");
+
                     b.Navigation("TargetAudience");
+
+                    b.Navigation("UpdatedByUser");
                 });
 
             modelBuilder.Entity("InfinityBack.dataBase.ProductReview", b =>
@@ -839,6 +915,8 @@ namespace InfinityBack.Migrations
 
             modelBuilder.Entity("InfinityBack.dataBase.Product", b =>
                 {
+                    b.Navigation("Attachments");
+
                     b.Navigation("ProductReviews");
 
                     b.Navigation("ProductVariants");
@@ -849,6 +927,8 @@ namespace InfinityBack.Migrations
             modelBuilder.Entity("InfinityBack.dataBase.ProductVariant", b =>
                 {
                     b.Navigation("CartItems");
+
+                    b.Navigation("Images");
 
                     b.Navigation("OrderDetails");
                 });
@@ -864,9 +944,13 @@ namespace InfinityBack.Migrations
 
                     b.Navigation("Cart");
 
+                    b.Navigation("CreatedProducts");
+
                     b.Navigation("Orders");
 
                     b.Navigation("ProductReviews");
+
+                    b.Navigation("UpdatedProducts");
 
                     b.Navigation("Wishlists");
                 });

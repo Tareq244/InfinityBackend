@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InfinityBack")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4088ac9dd580fa4aaa7bf5c06d2f3ccd794156d1")]
 [assembly: System.Reflection.AssemblyProductAttribute("InfinityBack")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InfinityBack")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
